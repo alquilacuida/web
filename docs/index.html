@@ -17,6 +17,12 @@
             padding: 20px 0; 
             text-align: center;
         }
+        header img {
+            max-width: 50px;
+            height: auto;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
         nav { 
             text-align: center; 
             padding: 10px 0; 
@@ -73,10 +79,12 @@
 </head>
 <body>
     <header>
+        <img src="img/alquilacuida.png" alt="AlquilaCuida Logo">
         <h1>AlquilaCuida.com</h1>
         <nav>
-            <a href="#features">Features</a>
-            <a href="#contact">Contact</a>
+            <a href="#features">Características</a>
+            <a href="#providers">Proveedores</a>
+            <a href="#contact">Contacto</a>
         </nav>
     </header>
     <section class="hero">
@@ -98,6 +106,19 @@
             <p>Conozca el costo por adelantado, sin tarifas ocultas.</p>
         </div>
     </section>
+    
+    <section class="hero" id="providers" style="background-color: #f9f9ff; border-top: 1px solid #eee;">
+        <h1>¿Eres un Profesional de Mantenimiento?</h1>
+        <p>Únete a nuestra red de proveedores de servicios y aumenta tus ingresos. Conectamos a profesionales cualificados con propietarios que necesitan tus servicios.</p>
+        <ul style="text-align: left; max-width: 600px; margin: 20px auto; line-height: 1.6;">
+            <li>Gestiona tu propio horario y disponibilidad</li>
+            <li>Recibe pagos puntuales y seguros</li>
+            <li>Amplía tu cartera de clientes sin costes de publicidad</li>
+            <li>Cero comisiones durante los primeros 3 meses</li>
+        </ul>
+        <a class="cta-button" href="#provider-signup" style="background-color: #4a90e2;">Regístrate como Proveedor</a>
+    </section>
+    
     <footer>
         <p>&copy; 2025 AlquilaCuida.com - Todos los derechos reservados.</p>
     </footer>
