@@ -38,26 +38,29 @@ const locations = [
     "Santa Pola"
 ];
 
-// obtain all select elements with the class 'category'
-const category_selects = document.querySelectorAll('select.category');
-category_selects.forEach(select => {
-    // add the categories as options to the select element
-    category_list.forEach(category => {
-        const option = document.createElement('option');
-        option.value = Object.keys(category)[0];
-        option.textContent = Object.keys(category)[0];
-        select.appendChild(option);
+// Wait for the DOM to be fully loaded before manipulating elements
+document.addEventListener('DOMContentLoaded', function() {
+    // obtain all select elements with the class 'category'
+    const category_selects = document.querySelectorAll('select.category');
+    category_selects.forEach(select => {
+        // add the categories as options to the select element
+        category_list.forEach(category => {
+            const option = document.createElement('option');
+            option.value = Object.keys(category)[0];
+            option.textContent = Object.keys(category)[0];
+            select.appendChild(option);
+        });
     });
-});
 
-// obtain all select elements with the class 'location'
-const location_selects = document.querySelectorAll('select.location');
-location_selects.forEach(select => {
-    // add the locations as options to the select element
-    locations.forEach(location => {
-        const option = document.createElement('option');
-        option.value = location;
-        option.textContent = location;
-        select.appendChild(option);
+    // obtain all select elements with the class 'location'
+    const location_selects = document.querySelectorAll('select.location');
+    location_selects.forEach(select => {
+        // add the locations as options to the select element
+        locations.forEach(location => {
+            const option = document.createElement('option');
+            option.value = location;
+            option.textContent = location;
+            select.appendChild(option);
+        });
     });
 });
