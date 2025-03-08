@@ -44,7 +44,7 @@ const category_list = [
 // Initialize empty locations array
 let locations = [];
 
-const api_url = 'https://script.google.com/macros/s/AKfycbwqobr94OPeDwLsVBjPJXVROzyn7Qwx8wcXKTbBHgl8FudorlqEMPdo0f5dfdhCiCSZ/exec';
+const api_url = 'https://script.google.com/macros/s/AKfycbxskyJj_TbbRNUPPe8LvJjYcQGeoo3wB6_yAE6smEd5FOqqa_DxvOO74RELxa1dA8mW/exec';
 
 // Fetch locations from Google Apps Script
 fetch(`${api_url}?op=locations`)
