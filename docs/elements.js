@@ -1,7 +1,7 @@
 let locations = [];
 let serviceTypes = [];
 
-const api_url = 'https://script.google.com/macros/s/AKfycbxskyJj_TbbRNUPPe8LvJjYcQGeoo3wB6_yAE6smEd5FOqqa_DxvOO74RELxa1dA8mW/exec';
+const api_url = '//backend.alquilacuida.com';
 
 // Fetch locations from Google Apps Script
 fetch(`${api_url}?op=home`)
