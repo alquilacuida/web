@@ -55,7 +55,7 @@ function populateServiceTypeDropdown() {
         // Add the service types as options to the select element
         serviceTypes.forEach(service => {
             const option = document.createElement('option');
-            option.value = service;
+            option.value = JSON.stringify(service);
             option.textContent = service[0];
             select.appendChild(option);
         });
@@ -71,6 +71,10 @@ document.addEventListener('DOMContentLoaded', function() {
         populateServiceTypeDropdown();
     }
     // Otherwise, they'll be populated when the fetch completes
+    // if the anchor is 'chat', remove it
+    if (window.location.hash === '#chat') {
+        window.location.hash = '';
+    }
 });
 
 
@@ -116,14 +120,14 @@ function addMessage(text, role, options) {
 
 function startChat() {
     // obtain the category and location selected by the user
-    const category = document.querySelector('select.category').value;
+    const category = JSON.parse(document.querySelector('select.category').value);
     const location = document.querySelector('select.location').value;
     // obtain the description of the category
-    const description = category_list.find(c => Object.keys(c)[0] === category)[category].description;
+    const description = category[1];
     // obtain the initial question of the category
-    const initial_question = category_list.find(c => Object.keys(c)[0] === category)[category].initial_question;
+    const initial_question = category[2];
     // obtain the answer options of the category
-    const answer_options = category_list.find(c => Object.keys(c)[0] === category)[category].aswer_options;
+    const answer_options = category[3].split(',');
 
     // hide all elements that have the class "remove-on-chat"
     const elements_to_remove = document.querySelectorAll('.remove-on-chat');
@@ -136,7 +140,7 @@ function startChat() {
     chat_container.style.display = 'block';
 
     // create the initial message, using category, location, description and initial question
-    addMessage(`Hola, entiendo que necesitas ayuda con ${category} en ${location}. Ofrecemos: ${description}`, 'bot');
+    addMessage(`Hola, entiendo que necesitas ayuda con ${category[0]} en ${location}. Ofrecemos: ${description}`, 'bot');
     addMessage('Para poder ayudarte mejor, necesito hacerte algunas preguntas.', 'bot');
     addMessage(initial_question, 'bot', answer_options);
 }
