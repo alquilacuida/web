@@ -1,59 +1,18 @@
-const category_list = [
-    {"Limpieza y lavandería": {
-        "description": "Servicios de limpieza general, limpieza profunda entre huéspedes, lavado de sábanas y toallas.",
-        "initial_question": "¿Cuántas habitaciones tiene el alojamiento?",
-        "aswer_options": ["1", "2", "3", "4", "5 o más"]
-    }},
-    {"Fontanería": {
-        "description": "Servicios de reparación y mantenimiento de sistemas de agua, grifos, tuberías y desagües.",
-        "initial_question": "¿Cuál es el problema con la fontanería?",
-        "aswer_options": ["Fuga de agua", "Atasco", "Problema con el grifo", "Problema con el inodoro", "Otro"]
-    }},
-    {"Electricidad": {
-        "description": "Reparación y mantenimiento de sistemas eléctricos, iluminación y electrodomésticos.",
-        "initial_question": "¿Cuál es el problema con la electricidad?",
-        "aswer_options": ["Falta de electricidad", "Problema con la iluminación", "Problema con los electrodomésticos", "Otro"]
-    }},
-    {"Cerrajería y carpintería": {
-        "description": "Servicios de reparación de puertas, ventanas, cerraduras y elementos de madera.",
-        "initial_question": "¿Cuál es el problema con la cerrajería o la carpintería?",
-        "aswer_options": ["Problema con la cerradura", "Problema con la puerta", "Problema con la ventana", "Problema con muebles de madera", "Otro"]
-    }},
-    {"Pintura y albañilería": {
-        "description": "Trabajos de pintura, reparación de paredes y pequeñas obras.",
-        "initial_question": "¿Qué tipo de trabajo necesita?",
-        "aswer_options": ["Pintura", "Reparación de paredes", "Obras menores", "Otro"]
-    }},
-    {"Jardinería y exteriores": {
-        "description": "Mantenimiento de jardines, patios y áreas exteriores del alojamiento.",
-        "initial_question": "¿Qué tipo de trabajo necesita?",
-        "aswer_options": ["Podar plantas", "Cortar césped", "Limpieza de jardín", "Otro"]
-    }},
-    {"Internet y domótica": {
-        "description": "Configuración y solución de problemas con WiFi, dispositivos inteligentes y sistemas automatizados.",
-        "initial_question": "¿Cuál es el problema con Internet o la domótica?",
-        "aswer_options": ["Instalar nuevos dispositivos", "Problema con WiFi", "Problema con dispositivos inteligentes", "Problema con sistemas automatizados", "Otro"]
-    }},
-    {"Control de plagas": {
-        "description": "Prevención y eliminación de insectos, roedores y otras plagas.",
-        "initial_question": "¿Qué tipo de plaga tiene?",
-        "aswer_options": ["Insectos", "Roedores", "Otras plagas", "No estoy seguro"]
-    }}
-];
-
-// Initialize empty locations array
 let locations = [];
+let serviceTypes = [];
 
 const api_url = 'https://script.google.com/macros/s/AKfycbxskyJj_TbbRNUPPe8LvJjYcQGeoo3wB6_yAE6smEd5FOqqa_DxvOO74RELxa1dA8mW/exec';
 
 // Fetch locations from Google Apps Script
-fetch(`${api_url}?op=locations`)
+fetch(`${api_url}?op=home`)
     .then(response => response.json())
     .then(data => {
         locations = data.locations;
+        serviceTypes = data.serviceTypes;
         // Populate location dropdowns if DOM is already loaded
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             populateLocationDropdowns();
+            populateServiceTypeDropdown();
         }
     })
     .catch(error => {
@@ -86,12 +45,30 @@ function populateLocationDropdowns() {
     });
 }
 
+// Function to populate service type dropdown
+function populateServiceTypeDropdown() {
+    const service_selects = document.querySelectorAll('select.category');
+    service_selects.forEach(select => {
+        // Clear existing options
+        select.innerHTML = '';
+        
+        // Add the service types as options to the select element
+        serviceTypes.forEach(service => {
+            const option = document.createElement('option');
+            option.value = service;
+            option.textContent = service[0];
+            select.appendChild(option);
+        });
+    });
+}
+
 // Wait for the DOM to be fully loaded before manipulating elements
 document.addEventListener('DOMContentLoaded', function() {
     // Populate category dropdown
     // If locations have been fetched, populate them now
     if (locations.length > 0) {
         populateLocationDropdowns();
+        populateServiceTypeDropdown();
     }
     // Otherwise, they'll be populated when the fetch completes
 });
