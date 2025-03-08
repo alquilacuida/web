@@ -41,37 +41,42 @@ const category_list = [
     }}
 ];
 
-const locations = [
-    "Torrevieja",
-    "Orihuela Costa",
-    "La Mata",
-    "Guardamar del Segura",
-    "Los Montesinos",
-    "San Miguel de Salinas",
-    "Ciudad Quesada",
-    "Rojales",
-    "Pilar de la Horadada",
-    "Santa Pola"
-];
+// Initialize empty locations array
+let locations = [];
 
-// Wait for the DOM to be fully loaded before manipulating elements
-document.addEventListener('DOMContentLoaded', function() {
-    // obtain all select elements with the class 'category'
-    const category_selects = document.querySelectorAll('select.category');
-    category_selects.forEach(select => {
-        // add the categories as options to the select element
-        category_list.forEach(category => {
-            const option = document.createElement('option');
-            option.value = Object.keys(category)[0];
-            option.textContent = Object.keys(category)[0];
-            select.appendChild(option);
-        });
+const api_url = 'https://script.google.com/macros/s/AKfycbwqobr94OPeDwLsVBjPJXVROzyn7Qwx8wcXKTbBHgl8FudorlqEMPdo0f5dfdhCiCSZ/exec';
+
+// Fetch locations from Google Apps Script
+fetch(`${api_url}?op=locations`)
+    .then(response => response.json())
+    .then(data => {
+        locations = data.locations;
+        // Populate location dropdowns if DOM is already loaded
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            populateLocationDropdowns();
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching locations:', error);
+        // Fallback to default locations in case of error
+        locations = [
+            "Torrevieja", "Orihuela Costa", "La Mata", "Guardamar del Segura",
+            "Los Montesinos", "San Miguel de Salinas", "Ciudad Quesada", 
+            "Rojales", "Pilar de la Horadada", "Santa Pola"
+        ];
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            populateLocationDropdowns();
+        }
     });
 
-    // obtain all select elements with the class 'location'
+// Function to populate location dropdowns
+function populateLocationDropdowns() {
     const location_selects = document.querySelectorAll('select.location');
     location_selects.forEach(select => {
-        // add the locations as options to the select element
+        // Clear existing options
+        select.innerHTML = '';
+        
+        // Add the locations as options to the select element
         locations.forEach(location => {
             const option = document.createElement('option');
             option.value = location;
@@ -79,7 +84,18 @@ document.addEventListener('DOMContentLoaded', function() {
             select.appendChild(option);
         });
     });
+}
+
+// Wait for the DOM to be fully loaded before manipulating elements
+document.addEventListener('DOMContentLoaded', function() {
+    // Populate category dropdown
+    // If locations have been fetched, populate them now
+    if (locations.length > 0) {
+        populateLocationDropdowns();
+    }
+    // Otherwise, they'll be populated when the fetch completes
 });
+
 
 // hook on to changing the anchor on the page
 window.addEventListener('hashchange', function() {
