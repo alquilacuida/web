@@ -2,6 +2,7 @@ let locations = [];
 let serviceTypes = [];
 let chat_socket = null;
 let category;
+let customer_location;
 
 const api_url = '//backend.alquilacuida.com';
 const chat_url = 'wss://chat.alquilacuida.com/websocket';
@@ -143,7 +144,7 @@ function addMessage(text, role, options) {
     else {
         if (first_message) {
             first_message = false;
-            chat_socket.send(JSON.stringify({state: "start", category, location, text: text}));
+            chat_socket.send(JSON.stringify({state: "start", category, customer_location, text: text}));
         }
         else {
             chat_socket.send(JSON.stringify({state: "continue", text: text}));
@@ -154,7 +155,7 @@ function addMessage(text, role, options) {
 function startChat() {
     // obtain the category and location selected by the user
     category = JSON.parse(document.querySelector('select.category').value);
-    const location = document.querySelector('select.location').value;
+    customer_location = document.querySelector('select.location').value;
     // obtain the description of the category
     const description = category[1];
     // obtain the initial question of the category
@@ -173,7 +174,7 @@ function startChat() {
     chat_container.style.display = 'block';
 
     // create the initial message, using category, location, description and initial question
-    addMessage(`Hola, entiendo que necesitas ayuda con ${category[0]} en ${location}. Ofrecemos: ${description}`, 'bot');
+    addMessage(`Hola, entiendo que necesitas ayuda con ${category[0]} en ${customer_location}. Ofrecemos: ${description}`, 'bot');
     addMessage('Para poder ayudarte mejor, necesito hacerte algunas preguntas.', 'bot');
     addMessage(initial_question, 'bot', answer_options);
 
