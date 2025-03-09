@@ -129,7 +129,29 @@ function addAnswerOptions(options) {
 
 let first_message = true;
 
+function try_parse_options(text) {
+    // obtain the last line of the text
+    const lines = text.split('\n');
+    const last_line = lines[lines.length - 1];
+    // if the last line starts with 'Opciones:', parse the options
+    if (last_line.startsWith('Opciones:')) {
+        return {
+            success: true,
+            options: last_line.substring(10).split(','),
+            text: text.substring(0, text.length - last_line.length)
+        }
+    }
+    return {success: false};
+}
+
 function addMessage(text, role, options) {
+    if (role === 'bot' && !options) {
+        let parse_result = try_parse_options(text);
+        if (parse_result.success) {
+            text = parse_result.text;
+            options = parse_result.options;
+        }
+    }
     // obtain the chat container
     const chat_container = document.querySelector('.chat-box');
     // create a new message element
