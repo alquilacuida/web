@@ -1,6 +1,7 @@
 let locations = [];
 let serviceTypes = [];
 let chat_socket = null;
+let category;
 
 const api_url = '//backend.alquilacuida.com';
 const chat_url = 'wss://chat.alquilacuida.com/websocket';
@@ -152,7 +153,7 @@ function addMessage(text, role, options) {
 
 function startChat() {
     // obtain the category and location selected by the user
-    const category = JSON.parse(document.querySelector('select.category').value);
+    category = JSON.parse(document.querySelector('select.category').value);
     const location = document.querySelector('select.location').value;
     // obtain the description of the category
     const description = category[1];
