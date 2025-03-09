@@ -112,9 +112,15 @@ window.addEventListener('hashchange', function() {
 function addAnswerOptions(options) {
     const div_options = document.getElementById('answer-options');
     div_options.innerHTML = '';
-    if (!options) {
+    
+    if (!options || typeof options !== 'array' || options.length
+        === 0) {
         return;
     }
+    
+    // remove empty options
+    options = options.filter(option => typeof option == 'string' && option.trim() !== '');
+
     options.forEach(option => {
         const button = document.createElement('button');
         button.textContent = option;
