@@ -113,8 +113,7 @@ function addAnswerOptions(options) {
     const div_options = document.getElementById('answer-options');
     div_options.innerHTML = '';
     
-    if (!options || typeof options !== 'array' || options.length
-        === 0) {
+    if (!Array.isArray(options) || options.length === 0) {
         return;
     }
     
