@@ -138,6 +138,8 @@ function addMessage(text, role, options) {
     message.innerText = text;
     // add the message to the chat container
     chat_container.appendChild(message);
+    // make it scroll to the bottom
+    chat_container.scrollTop = chat_container.scrollHeight;
     if (role === 'bot') {
         addAnswerOptions(options);
     }
