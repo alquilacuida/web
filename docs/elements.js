@@ -113,10 +113,9 @@ function addAnswerOptions(options) {
     const div_options = document.getElementById('answer-options');
     div_options.innerHTML = '';
     
-    if (!Array.isArray(options) || options.length === 0) {
+    if (!Array.isArray(options)) {
         return;
     }
-    
     // remove empty options
     options = options.filter(option => typeof option == 'string' && option.trim() !== '');
 
@@ -124,7 +123,7 @@ function addAnswerOptions(options) {
         const button = document.createElement('button');
         button.textContent = option;
         button.classList.add('answer-option');
-        button.onclick = function() {
+        button.addEventListener('click', function() {
             addMessage(option, 'user');
             div_options.innerHTML = '';
         };
