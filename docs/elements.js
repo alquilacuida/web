@@ -126,7 +126,7 @@ function addAnswerOptions(options) {
         button.addEventListener('click', function() {
             addMessage(option, 'user');
             div_options.innerHTML = '';
-        };
+        });
         div_options.appendChild(button);
     });
 }
