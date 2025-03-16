@@ -189,7 +189,7 @@ function startChat() {
     // obtain the initial question of the category
     const initial_question = category[2];
     // obtain the answer options of the category
-    const answer_options = category[3].split(',');
+    const answer_options = category[3].split(';');
 
     // hide all elements that have the class "remove-on-chat"
     const elements_to_remove = document.querySelectorAll('.remove-on-chat');
