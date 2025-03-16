@@ -141,7 +141,7 @@ function try_parse_options(text) {
     if (last_line.startsWith('Opciones:')) {
         return {
             success: true,
-            options: last_line.substring(10).split(','),
+            options: last_line.substring(10).split(';'),
             text: text.substring(0, text.length - last_line.length)
         }
     }
